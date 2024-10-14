@@ -9,16 +9,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Parâmetros do problema
-L = 1.0       # Comprimento do domínio 1
-L_f = 0.5     # Comprimento do domínio 2
-D = 1.0       # Coeficiente de difusão
-k_a = 1.0     # Parâmetro k_a
-k_b = 2.0     # Parâmetro k_b
-C_E = 1.0     # Condição de contorno em x = 0
+L = 2      # Comprimento do domínio 1
+L_f = 1     # Comprimento do domínio 2
+D = 20       # Coeficiente de difusão
+k_a = 20     # Parâmetro k_a
+k_b = 100     # Parâmetro k_b
+C_E = 30     # Condição de contorno em x = 0
 
 # Discretização
-N1 = 50        # Número de pontos no domínio [0, L]
-N2 = 50        # Número de pontos no domínio [L, L+L_f]
+N1 = 10        # Número de pontos no domínio [0, L]
+N2 = 5        # Número de pontos no domínio [L, L+L_f]
 dx1 = L / N1   # Passo em [0, L]
 dx2 = L_f / N2 # Passo em [L, L + L_f]
 
@@ -43,11 +43,12 @@ def gauss_seidel(C, N1, N2, dx1, dx2, D, k_a, k_b, tolerancia, max_iter):
 
         # Atualização para o domínio 1 (0 <= x < L)
         for i in range(1, N1 - 1):
-            C[i] = (D / dx1**2) * (C[i+1] + C[i-1]) / (2*D / dx1**2 + k_a)
+            C[i] = (-D / (2*D + (dx1**2 * k_a))) * (C[i+1] + C[i-1])
+            # (D / dx1**2) * (C[i+1] + C[i-1]) / (2*D / dx1**2 + k_a)
 
         # Atualização para o domínio 2 (L <= x < L+L_f)
         for i in range(N1, N1 + N2 - 1):
-            C[i] = (D / dx2**2) * (C[i+1] + C[i-1]) / (2*D / dx2**2 + k_b)
+             C[i] = (-D / (2*D + (dx1**2 * k_b))) * (C[i+1] + C[i-1])
 
         # Condição de contorno em x = L + L_f (derivada zero: Neumann boundary condition)
         C[-1] = C[-2]  # C[N1+N2-1] = C[N1+N2-2]

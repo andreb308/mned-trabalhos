@@ -63,6 +63,7 @@ for i in range(N1,N-2):
         A[i,i] = (2 + (k_b*(dx**2))/ D)
         A[i,i+1] = -1
 
+print(A)
 #Vetor B
 B = np.zeros((N-2))
 B[0] = C_e
