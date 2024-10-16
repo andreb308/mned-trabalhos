@@ -59,17 +59,83 @@ def runge_kutta_4th(C_init, T_init, t_final, h):
     return t, C, T
 
 # Parâmetros iniciais
-dados = [{
-    "label": "Teste 01",
-    "C_init": 10.0,  # Concentração inicial em gmol/L
-    "T_init": 35.0,  # Temperatura inicial em graus Celsius
-    "t_final": 10,  # Tempo final de simulação em segundos
-    "dx": 0.01,  # Passo de tempo
-}]
+dados = [
+    {
+        "label": "Valores simples",
+        "C_init": 10.0,  # Concentração inicial em gmol/L
+        "T_init": 35.0,  # Temperatura inicial em graus Celsius
+        "t_final": 10,   # Tempo final de simulação em segundos
+        "dt": 0.01,      # Passo de tempo
+    },
+    {
+        "label": "Valores muito grandes",
+        "C_init": 1000.0,  # Concentração inicial muito alta
+        "T_init": 500.0,   # Temperatura inicial muito alta
+        "t_final": 5,      # Simulação curta para alta dinâmica
+        "dt": 0.001,       # Passo de tempo reduzido
+    },
+    {
+        "label": "Valores muito pequenos",
+        "C_init": 0.001,   # Concentração inicial muito baixa
+        "T_init": 0.1,     # Temperatura inicial muito baixa
+        "t_final": 20,     # Simulação mais longa para observar os efeitos
+        "dt": 0.01,        # Passo de tempo padrão
+    },
+    {
+        "label": "C e T iguais entre si",
+        "C_init": 50.0,    # Concentração e temperatura iguais
+        "T_init": 50.0,
+        "t_final": 15,     # Tempo de simulação intermediário
+        "dt": 0.01,        # Passo de tempo padrão
+    },
+    {
+        "label": "Baixa concentração, alta temperatura",
+        "C_init": 0.01,    # Concentração inicial muito baixa
+        "T_init": 100.0,   # Temperatura inicial muito alta
+        "t_final": 10,     # Tempo de simulação curto
+        "dt": 0.005,       # Passo de tempo ligeiramente menor
+    },
+    {
+        "label": "Alta concentração, temperatura ambiente",
+        "C_init": 200.0,   # Concentração inicial muito alta
+        "T_init": 25.0,    # Temperatura ambiente padrão
+        "t_final": 30,     # Simulação longa
+        "dt": 0.01,        # Passo de tempo padrão
+    },
+    {
+        "label": "Concentração e temperatura iniciais zero",
+        "C_init": 0.0,     # Concentração inicial zero
+        "T_init": 0.0,     # Temperatura inicial zero
+        "t_final": 10,     # Simulação curta
+        "dt": 0.01,        # Passo de tempo padrão
+    },
+    {
+        "label": "Alta concentração, baixa temperatura",
+        "C_init": 100.0,   # Concentração inicial alta
+        "T_init": 5.0,     # Temperatura inicial muito baixa
+        "t_final": 20,     # Simulação mais longa
+        "dt": 0.01,        # Passo de tempo padrão
+    },
+    {
+        "label": "Valores moderados",
+        "C_init": 50.0,    # Concentração inicial moderada
+        "T_init": 50.0,    # Temperatura inicial moderada
+        "t_final": 10,     # Simulação padrão
+        "dt": 0.02,        # Passo de tempo ligeiramente maior
+    },
+    {
+        "label": "Simulação longa",
+        "C_init": 1.0,     # Concentração inicial padrão
+        "T_init": 25.0,    # Temperatura inicial padrão
+        "t_final": 100,    # Tempo de simulação muito longo
+        "dt": 0.05,        # Passo de tempo aumentado
+    }
+]
+
 
 # Executando o método de Runge-Kutta
 for i in dados:
-    t, C, T = runge_kutta_4th(i["C_init"], i["T_init"], i["t_final"], i["dx"])
+    t, C, T = runge_kutta_4th(i["C_init"], i["T_init"], i["t_final"], i["dt"])
 
     print(f"T: {t}\n\n\n\n")
     print(f"f1: {C}\n\n\n\n")
