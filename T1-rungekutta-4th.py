@@ -59,35 +59,39 @@ def runge_kutta_4th(C_init, T_init, t_final, h):
     return t, C, T
 
 # Parâmetros iniciais
-C_init = 10.0  # Concentração inicial em gmol/L
-T_init = 35.0  # Temperatura inicial em graus Celsius
-t_final = 10  # Tempo final de simulação em segundos
-h = 0.01  # Passo de tempo
+dados = [{
+    "label": "Teste 01",
+    "C_init": 10.0,  # Concentração inicial em gmol/L
+    "T_init": 35.0,  # Temperatura inicial em graus Celsius
+    "t_final": 10,  # Tempo final de simulação em segundos
+    "dx": 0.01,  # Passo de tempo
+}]
 
 # Executando o método de Runge-Kutta
-t, C, T = runge_kutta_4th(C_init, T_init, t_final, h)
+for i in dados:
+    t, C, T = runge_kutta_4th(i["C_init"], i["T_init"], i["t_final"], i["dx"])
 
-print(f"T: {t}\n\n\n\n")
-print(f"f1: {C}\n\n\n\n")
-print(f"f2: {T}\n\n\n\n")
-# Plotando os resultados
-plt.figure(figsize=(10, 6))
+    print(f"T: {t}\n\n\n\n")
+    print(f"f1: {C}\n\n\n\n")
+    print(f"f2: {T}\n\n\n\n")
+    # Plotando os resultados
+    plt.figure(figsize=(10, 6))
 
-# Concentração
-plt.subplot(2, 1, 1)
-plt.plot(t, C, label="Concentração (C)")
-plt.xlabel('Tempo (s)')
-plt.ylabel('Concentração (gmol/L)')
-plt.grid(True)
-plt.legend()
+    # Concentração
+    plt.subplot(2, 1, 1)
+    plt.plot(t, C, label="Concentração (C)")
+    plt.xlabel('Tempo (s)')
+    plt.ylabel('Concentração (gmol/L)')
+    plt.grid(True)
+    plt.legend()
 
-# Temperatura
-plt.subplot(2, 1, 2)
-plt.plot(t, T, label="Temperatura (T)", color='orange')
-plt.xlabel('Tempo (s)')
-plt.ylabel('Temperatura (°C)')
-plt.grid(True)
-plt.legend()
+    # Temperatura
+    plt.subplot(2, 1, 2)
+    plt.plot(t, T, label="Temperatura (T)", color='orange')
+    plt.xlabel('Tempo (s)')
+    plt.ylabel('Temperatura (°C)')
+    plt.grid(True)
+    plt.legend()
 
-plt.tight_layout()
-plt.show()
+    plt.tight_layout()
+    plt.savefig(f'plots/T1/{i["label"]}.png', bbox_inches='tight')

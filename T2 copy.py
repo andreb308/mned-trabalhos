@@ -38,8 +38,8 @@ dados = [
         'k_a': 50,
         'k_b': 50,
         'C_E': 50,
-        'N1': 3,
-        'N2': 3,
+        'N1': 5,
+        'N2': 5,
     },
     {
         'label': 'delta T grande (poucos pontos)',
@@ -60,8 +60,8 @@ dados = [
         'k_a': 50,
         'k_b': 50,
         'C_E': 10,
-        'N1': 9,
-        'N2': 9
+        'N1': 10,
+        'N2': 10
     },
     {
         'label': 'Muitos pontos 2',
@@ -71,8 +71,8 @@ dados = [
         'k_a': 50,
         'k_b': 50,
         'C_E': 10,
-        'N1': 30,
-        'N2': 30,
+        'N1': 50,
+        'N2': 50,
     },
     {
         'label': 'Ka e Kb diferentes',
@@ -82,8 +82,8 @@ dados = [
         'k_a': 20,
         'k_b': 60,
         'C_E': 10,
-        'N1': 3,
-        'N2': 3,
+        'N1': 5,
+        'N2': 5,
     },
     {
         'label': 'Ka e Kb diferentes (Ka maior que Kb)',
@@ -93,8 +93,8 @@ dados = [
         'k_a': 60,
         'k_b': 20,
         'C_E': 10,
-        'N1': 3,
-        'N2': 3,
+        'N1': 5,
+        'N2': 5,
     },
     {
         'label': 'Divisão 80-20 para os domínios 1 e 2',
@@ -104,8 +104,8 @@ dados = [
         'k_a': 5,
         'k_b': 5,
         'C_E': 10,
-        'N1': 100,
-        'N2': 20,
+        'N1': 83,
+        'N2': 17
     },
     {
         'label': 'Ka e Kb diferentes, divisão diferente',
@@ -126,7 +126,7 @@ dados = [
         'k_a': 10,
         'k_b': 80,
         'C_E': 10,
-        'N1': 10,
+        'N1': 8,
         'N2': 2
     }
 ]
@@ -141,6 +141,8 @@ dados = [
 # C_E = 10     # Condição de contorno (x = 0)
 # N1 = 8        # Número de pontos no 1º segmento
 # N2 = 2 
+
+plt.figure(figsize = [8,5])
 for i in dados:
     dx = (i["L"]+i["L_f"]) / (i["N1"]+i["N2"])   # Passo no 1º segmento
     x1 = np.linspace(0, i["L"] + i["L_f"], i["N1"]+i["N2"])
@@ -167,7 +169,6 @@ for i in dados:
 
 # Exibir a solução
     x_total = x1
-    plt.figure(figsize = [8,5])
     plt.plot(x_total, C_final, label="Concentração C")
     Lplot = np.linspace(0, i["L"] + i["L_f"], i["N1"]+i["N2"])
     plt.scatter(Lplot, C, marker='*', color = 'red', label = f'N1: {i["N1"]}, N2: {i["N2"]}')
@@ -183,6 +184,8 @@ for i in dados:
     plt.title("Perfil de Concentração")
     plt.legend()
     plt.grid(True)
-    plt.savefig(f'plots/T2/{i["label"]}.png', bbox_inches='tight')
-    # plt.show()
+
+
+plt.savefig(f'plots/T2/{"Teste"}.png', bbox_inches='tight')
+plt.show()
 
