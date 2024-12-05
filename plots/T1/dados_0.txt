@@ -1,0 +1,12 @@
+dt = 5e-05
+Temperatura final: 28.1167
+Concentracao: 0.075782
+
+dt = 1e-05
+Temperatura final: 28.1165
+Concentracao: 0.075780
+
+dt = 0.0001
+Temperatura final: 28.1171
+Concentracao: 0.075786
+

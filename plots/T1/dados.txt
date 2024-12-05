@@ -1,52 +1,56 @@
+dt = 0.0001
+Temperatura final: 21.1727
+Concentracao: 0.010960
+
 dt = 0.005
-Temperatura final: 28.1557
-Concentracao: 0.076146
+Temperatura final: 21.1783
+Concentracao: 0.011012
 
 dt = 0.01
-Temperatura final: 28.1953
-Concentracao: 0.076515
+Temperatura final: 21.1840
+Concentracao: 0.011065
 
 dt = 0.02
-Temperatura final: 28.2751
-Concentracao: 0.077259
+Temperatura final: 21.1955
+Concentracao: 0.011173
 
 dt = 0.03
-Temperatura final: 28.5190
-Concentracao: 0.079534
+Temperatura final: 21.2188
+Concentracao: 0.011391
 
 dt = 0.05
-Temperatura final: 28.5191
-Concentracao: 0.079535
+Temperatura final: 21.2307
+Concentracao: 0.011501
 
 dt = 0.1
-Temperatura final: 28.9426
-Concentracao: 0.083484
+Temperatura final: 21.2918
+Concentracao: 0.012072
 
 dt = 0.3
-Temperatura final: -130391.3511
-Concentracao: 0.111078
+Temperatura final: -1211902.5304
+Concentracao: 0.013605
 
 dt = 0.5
-Temperatura final: -17938116621807.7109
-Concentracao: 0.111800
+Temperatura final: -633454561932633472.0000
+Concentracao: 0.015155
 
 dt = 0.75
-Temperatura final: -4181283055438.5981
-Concentracao: 0.240541
+Temperatura final: -2403653412027971584.0000
+Concentracao: 0.025636
 
 dt = 1
-Temperatura final: -7557465536850.4990
-Concentracao: 0.198559
+Temperatura final: -639973739129599104.0000
+Concentracao: 0.027922
 
 dt = 1.5
-Temperatura final: -2858819191.2947
-Concentracao: 0.743258
+Temperatura final: -4703829795623.4668
+Concentracao: 0.203235
 
 dt = 2
-Temperatura final: -5828749.9448
-Concentracao: 3.227046
+Temperatura final: -32143757486.5497
+Concentracao: 1.075684
 
 dt = 3
-Temperatura final: 35.0000
-Concentracao: 10.000000
+Temperatura final: -31397266.1658
+Concentracao: 13.066079
 
