@@ -1,59 +1,66 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Parâmetros do problema
-Lx = 1.0          # Comprimento do domínio
-Nx = 50           # Número de pontos espaciais
-alpha = 0.01      # Difusividade
-u = 0.1           # Velocidade de advecção
-CE = 1.0          # Condição de contorno em x=0
-T_max = 1.0       # Tempo total de simulação
-C = []
+# Lista de dicionários com os parâmetros do problema
+titulo = 'variando_CE'
+parametros = [
+    {"Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 0.1, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0},
+    {"Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 0.5, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0},
+    {"Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 1.0, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0}, # CASO BASE
+    {"Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 5.0, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0},
+    {"Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 10.0, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0},
 
-dados = [
-    {
-        'label': 'Caso Inicial',
-        'Lx': 10.0,
-        'Nx': 500,
-        'alpha': 0.01,
-        'u': 0.1,
-        'CE': 1.0,
-        'T_max': 10.0,
-    },
 ]
-# Método de Gauss-Seidel
-for it in dados:
-    dx = it['Lx'] / (it['Nx'] - 1)  # Espaçamento espacial
-    dt = 1 / (2 * it['alpha'] / dx**2 + it['u'] / dx) * 0.9  # Escolhendo 90% do limite de estabilidade
-    Nt = int(it['T_max'] / dt)  # Número de passos de tempo
 
-    # Vetor espacial e inicialização da solução
-    x = np.linspace(0, it['Lx'], it['Nx'])
-    C = np.zeros((it['Nx'], Nt + 1))  # Matriz de solução C(x,t)
+plt.figure(figsize=(7, 5))
 
-    # Condição inicial
-    C[:, 0] = 0  # C = 0 em todo o domínio inicialmente
-    C[0, :] = it['CE']  # Condição de contorno: C(x=0) = CE
+for params in parametros:
+    Lx = params["Lx"]
+    alpha = params["alpha"]
+    k = params["k"]
+    CE = params["CE"]
+    Nx = params["Nx"]
+    Nt = params["Nt"]
+    t_max = params["t_max"]
+    dt = t_max / Nt
+    dx = Lx / Nx
 
-    for n in range(Nt):  # Iteração no tempo
-        for i in range(1, it['Nx'] - 1):  # Iteração no espaço, excluindo os contornos
-            # Condição de estabilidade para o passo de tempo
-            C[i, n + 1] = (dt * it['alpha'] / dx**2 * (C[i + 1, n] - 2 * C[i, n] + C[i - 1, n]) -
-                           dt * it['u'] / dx * (C[i, n] - C[i - 1, n]) +
-                           C[i, n])
+    s = alpha * dt / dx**2
+    tolerance = params["tolerance"]
+    max_iterations = 1000
 
-        # Condição de contorno no último ponto: derivada nula -> C[N] = C[N-1]
-        C[-1, n + 1] = C[-2, n + 1]
+    C = np.zeros(Nx + 1)
+    C_new = np.zeros(Nx + 1)
+    errors = []
 
-    # Visualização dos resultados
-    plt.figure(figsize=(8, 6))
-    for t in range(0, Nt + 1, Nt // 5):  # Plot de alguns instantes de tempo
-        plt.plot(x, C[:, t], label=f't={t*dt:.2f}s')
-        print(f'{t} -> {t*dt:.2f}s')
-    plt.xlabel('x')
-    plt.ylabel('C(x, t)')
-    plt.title('Distribuição de C ao longo do tempo')
-    plt.legend()
-    plt.grid()
-    plt.show()
+    for n in range(Nt):
+        iteration = 0
+        max_error = float('inf')
 
+        while max_error > tolerance and iteration < max_iterations:
+            max_error = 0.0
+            for i in range(1, Nx):
+                old_value = C_new[i]
+                C_new[i] = (C[i] + s * (C_new[i - 1] + C_new[i + 1])) / (1 + (2 * s) + (k * dt))
+                max_error = max(max_error, abs(C_new[i] - old_value))
+
+            C_new[0] = CE
+            C_new[-1] = C_new[-2]
+
+            iteration += 1
+
+        errors.append(max_error)
+        C[:] = C_new[:]
+
+    x = np.linspace(0, Lx, Nx + 1)
+    plt.plot(x, C, label=f"CE = {CE}")
+
+plt.title("Distribuição de C(x, t_final) ao longo do domínio")
+plt.ylabel("C (concentração)")
+plt.xlabel("x (posição espacial)")
+# plt.xlim(0, 0.5)
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.savefig(f"plots/T3/{titulo}.png", bbox_inches='tight')
+plt.show()
