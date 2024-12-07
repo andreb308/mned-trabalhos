@@ -1,15 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Lista de dicionários com os parâmetros do problema
-titulo = 'variando_CE'
+titulo = 'variando_final'
 parametros = [
-    {"Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 0.1, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0},
-    {"Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 0.5, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0},
-    {"Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 1.0, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0}, # CASO BASE
-    {"Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 5.0, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0},
-    {"Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 10.0, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0},
-
+    {"label": 'Caso base', "Lx": 1.0, "alpha": 0.01, "k": 0.1, "CE": 1.0, "Nx": 50, "Nt": 100,"tolerance": 1e-6, "t_max": 1.0}, # CASO BASE
 ]
 
 plt.figure(figsize=(7, 5))
@@ -24,6 +18,7 @@ for params in parametros:
     t_max = params["t_max"]
     dt = t_max / Nt
     dx = Lx / Nx
+    label = params["label"]
 
     s = alpha * dt / dx**2
     tolerance = params["tolerance"]
@@ -53,7 +48,7 @@ for params in parametros:
         C[:] = C_new[:]
 
     x = np.linspace(0, Lx, Nx + 1)
-    plt.plot(x, C, label=f"CE = {CE}")
+    plt.plot(x, C, label=label)
 
 plt.title("Distribuição de C(x, t_final) ao longo do domínio")
 plt.ylabel("C (concentração)")
